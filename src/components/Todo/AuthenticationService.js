@@ -6,9 +6,17 @@ class AuthenticationService {
         return axios.get('http://localhost:8080/basicauth',{headers : {authorization: this.createBasicAuthToken(username,password)}})
     }
 
+    executeJwtAuthenticationService(username,password){
+        return axios.post('http://localhost:8080/authenticate',{
+            username,password
+        })
+    }
+
+
     createBasicAuthToken(username,password){
         return 'Basic ' + window.btoa(username + ":" + password)
     }
+
     registerSuccessfulLogin(username,password){
 
         //let basicAuthHeader = 'Basic ' + window.btoa(username + ":" + password) 
@@ -16,6 +24,16 @@ class AuthenticationService {
         //console.log('registerSuccessfulLogin');
         sessionStorage.setItem('authenticatedUser',username);
         this.setupAxiosInterceptors(this.createBasicAuthToken(username,password))
+    }
+
+    registerSuccessfulLoginForJwt(username,token){
+        sessionStorage.setItem('authenticatedUser',username);
+        this.setupAxiosInterceptors(this.createJwtToken(token))
+
+    }
+
+    createJwtToken(token){
+        return 'Bearer ' + token
     }
 
     logout (){
@@ -37,10 +55,13 @@ class AuthenticationService {
     }
 
     setupAxiosInterceptors(basicAuthHeader) {
+        console.log("interceptor")
         
         axios.interceptors.request.use(
+            
             (config) => {
                 if(this.isUserLoggedIn()){
+                    console.log("interceptor")
                  config.headers.authorization = basicAuthHeader
                 }
                 return config

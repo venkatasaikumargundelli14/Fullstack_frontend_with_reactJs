@@ -40,11 +40,22 @@ class LoginComponent extends Component {
         // this.setState({hasShowFailMesg : true})
         // this.setState({hasShowSuccesMesg : false})
         // }
+/*basic auth start
+        // AuthenticationService
+        // .executeBasicAuthenticationService(this.state.username,this.state.password) 
+        // .then(()=>{
+        //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+        //     this.props.history.push(`/welcome/${this.state.username}`)
+        // }).catch(() =>{
+        //     this.setState({hasShowFailMesg : true})
+        //     this.setState({hasShowSuccesMesg : false})
+        // })
+     basic auth ends   */ 
 
         AuthenticationService
-        .executeBasicAuthenticationService(this.state.username,this.state.password) 
-        .then(()=>{
-            AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
+        .executeJwtAuthenticationService(this.state.username,this.state.password) 
+        .then((Response)=>{
+            AuthenticationService.registerSuccessfulLoginForJwt(this.state.username,Response.data.token)
             this.props.history.push(`/welcome/${this.state.username}`)
         }).catch(() =>{
             this.setState({hasShowFailMesg : true})
