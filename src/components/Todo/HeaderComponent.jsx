@@ -11,7 +11,10 @@ class HeaderComponent extends Component {
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><a href="www.google.com"className="navbar-brand">Venkat Tutorial</a></div>
+                    <div className="navbar-brand">
+                        {/* <a href="www.google.com"></a> */}
+                        Venkat Tutorial
+                        </div>
                     <ul className="navbar-nav">
                         {isUserLoggedIn && <li ><Link className="nav-link" to="/welcome/venkata">Home</Link></li>}
                         {isUserLoggedIn && <li ><Link className="nav-link" to="/todos">Todos</Link></li>}

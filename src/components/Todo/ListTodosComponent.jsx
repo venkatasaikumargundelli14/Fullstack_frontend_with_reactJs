@@ -49,7 +49,7 @@ class ListTodosComponent extends Component {
                 })
                 this.refreshTodo()
             }
-        )
+        ).catch(error => error)
 
     }
 
